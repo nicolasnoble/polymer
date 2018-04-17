@@ -1,0 +1,51 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+<head>
+  <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../../../web-component-tester/browser.js"></script>
+  <link rel="import" href="../../polymer.html">
+</head>
+<body>
+  <element-data-uri id="fixture"></element-data-uri>
+  <script>
+    const componentArray = [
+      '<dom-module id="element-data-uri">',
+      '  <script>',
+      '    Polymer({',
+      '      is: "element-data-uri",',
+      '      properties: {',
+      '        exists: {',
+      '          type: Boolean,',
+      '          value: true',
+      '        }',
+      '      }',
+      '    });',
+      '  <' + '/script>',
+      '</dom-module>'
+    ];
+
+    suite('Link import with a data uri', function() {
+      test('imported', function(done) {
+        const component = componentArray.join('\n');
+        const link = document.createElement('link');
+        link.setAttribute('rel', 'import');
+        link.setAttribute('href', 'data:text/html,' + encodeURIComponent(component));
+        link.onload = function() {
+          assert.isTrue(document.getElementById('fixture').exists);
+          done();
+        };
+        document.head.appendChild(link);
+      });
+    });
+  </script>
+</body>
+</html>
